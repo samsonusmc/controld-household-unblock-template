@@ -1,0 +1,13 @@
+# Weak prior only — not an allowlist.
+amazon.com
+apple.com
+microsoft.com
+google.com
+target.com
+walmart.com
+shopify.com
+stripe.com
+paypal.com
+clever.com
+schoology.com
+canvaslms.com

@@ -1,0 +1,19 @@
+# Volume alone never promotes a domain to allow.
+keep_blocked_if_looks_like:
+  - malware
+  - phishing
+  - tracker
+  - ads
+  - telemetry
+useful_false_positive_signals:
+  - shopping_checkout
+  - school_or_work
+  - email_click_through
+  - banking_or_bills
+never_bulk_allow:
+  - doubleclick.net
+  - googleadservices.com
+  - sendgrid.net
+  - list-manage.com
+min_queries_for_weekly_mention: 3
+min_distinct_days_for_permanent_bypass_candidate: 2

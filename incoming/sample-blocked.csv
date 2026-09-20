@@ -1,0 +1,4 @@
+timestamp,organizationId,endpointId,clientId,profileId,question,action,trigger,triggerValue,spoofTarget,protocol,rrType,statusCode,sourceIp
+2026-09-18T15:04:11Z,,,,family,checkout.example-store.com,0,filter,New Domains,,doh,A,0,192.0.2.10
+2026-09-19T12:01:00Z,,,,family,pixel.example-ads.com,0,filter,Tracking,,doh,A,0,192.0.2.10
+2026-09-20T08:11:02Z,,,,family,payments.shopify.com,0,filter,New Domains,,doh,A,0,192.0.2.11

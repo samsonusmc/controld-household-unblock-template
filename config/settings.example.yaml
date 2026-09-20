@@ -1,0 +1,12 @@
+account_type: consumer
+analytics_host: ""
+analytics_mode: json
+family_request_mailbox: you@example.com
+family_request_subject: blocked
+user_id: ""
+profiles: []
+endpoints: []
+lookback_days: 7
+auto_apply_family_requests: true
+auto_apply_approved_issue_comments: true
+temporary_allow_hours: 24
