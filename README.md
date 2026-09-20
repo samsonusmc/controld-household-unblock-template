@@ -1,25 +1,14 @@
 # Control D household unblock template
 
-Public starter for:
+Public starter for weekly Control D blocked-DNS review and a family email → 24h Bypass pipeline.
 
-- weekly review of Control D **blocked** DNS logs
-- family email → GitHub issue → optional 24h Bypass (`ttl` on the custom rule)
-- promote to permanent only on an **exact** hostname repeat, or a shared suffix **deeper than** the company apex
+**Grok and household admins: read [SETUP_WITH_GROK.md](SETUP_WITH_GROK.md) first.** That file is the implementation playbook (required products, questions to ask, automation skeleton).
 
-This is **not** a live household repo. Do not put API tokens, profile IDs, or activity logs here.
+This repo has **no secrets and no live logs**. Put the real household copy in a private repo.
 
-Private live example (do not copy its `digests/`): keep yours private.
+Required to run the full pipeline:
 
-## What you add after you Use this template
-
-1. Copy `config/settings.example.yaml` → `config/settings.yaml` and fill your IDs locally (keep that file private or gitignored).
-2. GitHub Actions secrets: `CONTROLD_API_TOKEN`, `CONTROLD_PROFILE_ID` or `CONTROLD_PROFILE_IDS`, optional `CONTROLD_ALLOWLIST_FOLDER_ID`, optional `CONTROLD_ANALYTICS_HOST`.
-3. Control D endpoints on **Full Analytics**.
-4. Your own Grok/Gmail automations with **your** From allowlist. Automations are not stored in this git repo.
-
-## Safety defaults
-
-- No auto-bypass for malware, phishing, scams, illegal, or unknown-risky hosts.
-- Ads / mailer click wrappers stay refused.
-- Family first allow is 24 hours via Control D rule `ttl` (unix expiry).
-- Never commit secrets.
+1. Control D subscription + API token + Full Analytics
+2. GitHub (connector + private repo + Actions secrets)
+3. Grok connected to **Gmail or Outlook** (family mail)
+4. Grok Automations on the admin account
