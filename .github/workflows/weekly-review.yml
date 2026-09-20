@@ -1,0 +1,40 @@
+name: weekly-review
+on:
+  schedule:
+    - cron: "0 13 * * 0"
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: ISO week dir
+        id: week
+        run: echo "dir=digests/$(date +%G-W%V)" >> "$GITHUB_OUTPUT"
+      - name: Fetch activity if secrets exist
+        env:
+          CONTROLD_API_TOKEN: ${{ secrets.CONTROLD_API_TOKEN }}
+          CONTROLD_ANALYTICS_HOST: ${{ secrets.CONTROLD_ANALYTICS_HOST }}
+          CONTROLD_ENDPOINT_ID: ${{ secrets.CONTROLD_ENDPOINT_ID }}
+        run: python3 scripts/fetch_activity.py --outdir "${{ steps.week.outputs.dir }}"
+      - name: Analyze
+        run: |
+          mkdir -p "${{ steps.week.outputs.dir }}" incoming
+          if ls incoming/*.csv >/dev/null 2>&1 || [ -f "${{ steps.week.outputs.dir }}/activity.csv" ]; then
+            python3 scripts/analyze_blocks.py --incoming incoming --outdir "${{ steps.week.outputs.dir }}" ${{ hashFiles(format('{0}/activity.csv', steps.week.outputs.dir)) && format('--input {0}/activity.csv', steps.week.outputs.dir) || '' }}
+          else
+            printf '%s\n' "No CSV this week." > "${{ steps.week.outputs.dir }}/REVIEW.md"
+          fi
+      - name: Commit digest
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add digests incoming || true
+          git diff --cached --quiet || git commit -m "Weekly digest"
+          git push || true
